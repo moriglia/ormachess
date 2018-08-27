@@ -12,14 +12,14 @@ function callProcedure($statement, $multiQuery=true){
     $status = $dbmanager->execute($statement, false, $multiQuery);
     $result = null;
     $limit = 30;
-    while($status && $limit--){ // limit is only for safety
+    while($multiQuery && $status && $limit--){ // limit is only for safety
         // run through all results to get the last one.
         $status = $dbmanager->getMoreResults($result);
         $restype = gettype($result);
         debugMessage("Status: {$status},\tResultType: {$restype}\r\n</pre>");
     }
     $dbmanager->closeConnection();
-    return $result ;
+    return ($multiQuery ? $result : $status) ;
 }
 
  ?>
