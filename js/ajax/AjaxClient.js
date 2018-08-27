@@ -19,7 +19,7 @@ function AjaxClient(){
 
     this.request = function(method, url, data, responseHandler){
         var client = AjaxClient.getClient();
-        if(!c){
+        if(!client){
             window.alert("AJAX required, but not supported by your browser. You can no longer use this site.");
             return false;
         }
