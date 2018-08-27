@@ -1,0 +1,6 @@
+*.sql
+**/*.sql
+sqlUtils/
+img/
+css/img/
+php/helpers/dbConfig.php
