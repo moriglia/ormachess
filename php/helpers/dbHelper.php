@@ -50,7 +50,7 @@ class dbManager {
         }
         $this->connection = null;
 
-        debugMessage("Connection closed");
+        //debugMessage("Connection closed");
     }
 
     function filter($string) {

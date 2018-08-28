@@ -16,7 +16,6 @@ function callProcedure($statement, $multiQuery=true){
         // run through all results to get the last one.
         $status = $dbmanager->getMoreResults($result);
         $restype = gettype($result);
-        debugMessage("Status: {$status},\tResultType: {$restype}\r\n</pre>");
     }
     $dbmanager->closeConnection();
     return ($multiQuery ? $result : $status) ;
