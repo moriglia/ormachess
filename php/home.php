@@ -12,14 +12,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php includeHead(); debugMessage("Home now!");/*include_once DIR_HTML . "common_header.html"; */?>
+    <?php
+    includeHead();
+    includeAjax();
+    debugMessage("Home now!");
+    ?>
+    <script src="../js/ajax/homeLoader.js" ></script>
 </head>
-<body>
+<body onload="homeInit()">
     <?php include_once DIR_LAYOUT  . "navigation_menu.php" ;?>
     <header>
         <h1>Home</h1>
     </header>
-    <section id="challengeSection">
+    <section id="scoreboardSection">
         <header>
             <h2>Challenge a gamer</h2>
             <p>
@@ -27,7 +32,7 @@
                 Once they accept the challenge the time flows! Good luck!
             </p>
         </header>
-        <ul id="challengeUsers"></ul>
+        <table id="scoreboard"></table>
     </section>
     <section id="currentChallengesSection">
         <header>
@@ -54,6 +59,7 @@
                 </dl>
             </p>
         </header>
+        <table id="currentChallenges"></table>
     </section>
 
 </body>

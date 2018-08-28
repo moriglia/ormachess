@@ -1,41 +1,42 @@
 // Essentially copyed from Lab9 ------------------------------------------------
 function AjaxClient(){
-    this.getClient = function () {
-        var xmlHttp = null;
-        try{
-            xmlHttp = new XMLHttpRequest();
+    this.client = null;
+    try{
+        this.client = new XMLHttpRequest();
+    } catch (e) {
+        try {
+            this.client = new ActiveXObject("Msxml2.XMLHTTP");
         } catch (e) {
             try {
-                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {
-                try {
-					xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-				} catch (e) {
-					xmlHttp = null;
-				}
-            }
+				this.client = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {
+				this.client = null;
+			}
         }
     }
 
     this.request = function(method, url, data, responseHandler){
-        var client = AjaxClient.getClient();
-        if(!client){
+        if(!this.client){
             window.alert("AJAX required, but not supported by your browser. You can no longer use this site.");
-            return false;
+            return ;
         }
 
-        client.open(method, url, true);
+        this.client.open(method, url, true);
         if(data && method == "POST" ){
-            client.setRequestHeader('Content-Type', 'application/json');
+            this.client.setRequestHeader('Content-Type', 'application/json');
             data = JSON.stringify(data);
         } // GET + data not handled
-        client.onreadystatechange = function(){
-            if(client.readyState == 4){
-                var response = JSON.parse(client.responseText);
+        var thatclient = this.client;
+        this.client.onreadystatechange = function(){
+            if(thatclient.readyState == 4){
+                console.log(thatclient);
+                console.log("New data:" + thatclient.responseText);
+                var response = JSON.parse(thatclient.responseText);
                 responseHandler(response);
             }
         }
-        client.send(data);
+        console.log("Request sent.");
+        this.client.send(data);
     }
 
     this.get = function (url, responseHandler) {
@@ -45,4 +46,6 @@ function AjaxClient(){
     this.post = function (url, data, responseHandler) {
         return this.request("POST", url, data, responseHandler);
     }
+
+    console.log("AjaxClient contructed");
 }

@@ -6,32 +6,31 @@ require_once DIR_HELPERS . "dbHelper.php";
 require_once DIR_UTILS . "sessionUtils.php";
 require_once DIR_AJAX . "AjaxResponse.php";
 require_once DIR_AJAX . "AjaxResponseItems.php";
+require_once DIR_UTILS . "debugUtils.php";
 
 if(!isUserLoggedIn()){
     header("Location: ../login.php");
 }
 
 $uid = $dbmanager->filter($_SESSION['uid']);
-$statement = "call allUsers(''{$uid}'')";
+$statement = "call allUsers({$uid}) ;";
 $result = callProcedure($statement, false);
 
-if(!$result->num_rows()){
-    $response = new AjaxResponse(1, "Empty set for database query.");
+if(!$result){
+    $response = new AjaxResponse(1, "SQL unknown error.");
     echo $response->jsonEncode();
     exit ;
 }
 
-// get first row to check for error
-$row = $result->fetch_assoc();
-if(isset($row['error'])){
+if($result->field_count != 5){
     $response = new AjaxResponse(1, "Error executing query, unknown cause.");
     echo $response->jsonEncode();
     exit ;
 }
 
 // prepare data payload
-$responseData = new Array();
-do {
+$responseData = array();
+while ($row = $result->fetch_assoc()) {
     $responseData[] = new UserStatistics(
             $row['username'],
             $row['wins'],
@@ -39,8 +38,7 @@ do {
             $row['fails'],
             $row['progress']
     );
-} while ($row = $result->fetch_assoc());
-
+}
 // send response
 $response = new AjaxResponse(0, "OK", $responseData);
 echo $response->jsonEncode();

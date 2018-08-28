@@ -2,7 +2,7 @@
 
 
 class AjaxResponse {
-    protected $status, $message, $data;
+    public $status, $message, $data;
 
     function __construct($status = null, $message = null, $data = null){
         $this->status = $status;
