@@ -1,3 +1,19 @@
+// utility function
+function JSONtoURL(data){
+    var urlEncodedString = "";
+    for(var item in data){
+        var itemValue = null;
+        if(typeof(data[item])=="object"){
+            itemValue = encodeURI(JSON.stringify(data[item]));
+        } else {
+            itemValue = data[item];
+        }
+        urlEncodedString += item + "="
+            + itemValue + "&";
+    }
+    return urlEncodedString;
+}
+
 // Essentially copyed from Lab9 ------------------------------------------------
 function AjaxClient(){
     this.client = null;
@@ -21,21 +37,35 @@ function AjaxClient(){
             return ;
         }
 
+        if(data){
+            // encode both for get and for post requests
+            data = JSONtoURL(data);
+        }
+        if (method == "GET"){
+            // before opening connection
+            // we must know the complete url
+            url += "?" + (data ? data : "");
+            console.log("GET " + url);
+        }
         this.client.open(method, url, true);
-        if(data && method == "POST" ){
-            this.client.setRequestHeader('Content-Type', 'application/json');
-            data = JSON.stringify(data);
-        } // GET + data not handled
+        if (method == "POST") {
+            // we can only set headers after
+            // having opened the connection
+            this.client.setRequestHeader(
+                'Content-Type',
+                // php $_POST can only be used with :
+                // application/x-www-form-urlencoded
+                // multipart/form-data
+                'application/x-www-form-urlencoded');
+        }
         var thatclient = this.client;
         this.client.onreadystatechange = function(){
             if(thatclient.readyState == 4){
                 console.log(thatclient);
-                console.log("New data:" + thatclient.responseText);
                 var response = JSON.parse(thatclient.responseText);
                 responseHandler(response);
             }
         }
-        console.log("Request sent.");
         this.client.send(data);
     }
 
@@ -46,6 +76,4 @@ function AjaxClient(){
     this.post = function (url, data, responseHandler) {
         return this.request("POST", url, data, responseHandler);
     }
-
-    console.log("AjaxClient contructed");
 }

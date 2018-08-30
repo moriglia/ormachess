@@ -1,6 +1,6 @@
 function displayErrorMessage(parentId, errorText, childId=null){
     var parentNode = document.getElementById(parentNode);
-    if (!parentnode){
+    if (!parentNode){
         window.alert(errorText);
         return ;
     }

@@ -1,9 +1,8 @@
 drop procedure if exists addUser;
 drop procedure if exists authUser;
 drop procedure if exists allUsers;
-drop procedure if exists userMatches; -- renamed in userRequests()
-drop procedure if exists userRequests; -- renamed in userChallenges()
 drop procedure if exists userChallenges;
+drop procedure if exists addMatchRequest;
 
 delimiter $$
 
@@ -20,6 +19,55 @@ create procedure addUser (
             (_username, _password, _email);
 
         set error_ := 0 ;
+
+    end $$
+
+create procedure addMatchRequest(
+    in _white varchar(32),
+    in _black varchar(32),
+    in _proposer tinyint,
+    in _duration int(16)
+)
+    begin
+        declare wid int(16) default null;
+        declare bid int(16) default null;
+        declare now_var datetime default now();
+        declare rid_var int(16) default null;
+
+        declare exit handler for 1062
+            select 1 as error;
+
+        select uid into wid
+        from user
+        where username = _white
+        limit 1 ;
+
+        select uid into bid
+        from user
+        where username = _black
+        limit 1 ;
+
+        insert into matchrequest(
+            white, black, proposer,
+            duration, proposalDate, status
+        )
+        values (
+            wid, bid, _proposer,
+            _duration, now_var, 0
+        );
+
+        select rid into rid_var
+        from matchrequest
+        where
+            white = wid
+            and black = bid
+            and proposalDate = now_var
+        limit 1 ; -- of course, the tuple is a key
+
+        -- outputs only unknown variables
+        select
+            rid_var,
+            now_var;
 
     end $$
 
@@ -69,7 +117,14 @@ create procedure userChallenges (
         declare exit handler for sqlexception
         select 1 as error;
 
-        select *
+        select
+            d.id as id,
+            w.username as white,
+            b.username as black,
+            d.proposer as proposer,
+            d.duration as duration,
+            d.moment as moment,
+            d.status as status
         from
         (
             select
@@ -88,7 +143,7 @@ create procedure userChallenges (
                 mid as id,
                 white,
                 black,
-                null as proposer,
+                proposer,
                 duration,
                 startTime as moment,
                 status
@@ -96,6 +151,8 @@ create procedure userChallenges (
             where
                 white = _uid or black = _uid
         ) as d
+            join user w on w.uid = d.white
+            join user b on b.uid = d.black
         order by d.moment desc;
     end $$
 

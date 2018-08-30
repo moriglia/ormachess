@@ -19,6 +19,8 @@ create table chessmatch (
     mid int(16) auto_increment not null,
     white int(16) not null,
     black int(16) not null,
+    proposer int(16) not null,
+        -- 0: white
     duration int(16) default null,
     startTime datetime default null,
     status tinyint default null,
@@ -44,6 +46,8 @@ create table matchrequest (
     white int(16) not null,
     black int(16) not null,
     proposer tinyint,
+        -- 0 white,
+        -- 1 black
     duration int(16) not null,
     proposalDate datetime not null,
     status tinyint not null default 0,

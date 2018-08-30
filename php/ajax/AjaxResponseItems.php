@@ -14,17 +14,21 @@ class UserStatistics {
 }
 
 class MatchRequest {
-    public $matchid,
+    public $id,
            $white,
            $black,
            $proposer,
+           $duration,
+           $moment,
            $status;
 
-    function __construct($m, $w, $b, $p, $s){
-        $this->matchid = $m;
+    function __construct($m, $w, $b, $p, $d, $moment, $s){
+        $this->id = $m;
         $this->white = $w;
         $this->black = $b;
         $this->proposer = $p;
+        $this->duration = $d;
+        $this->moment = $moment;
         $this->status = $s;
     }
 

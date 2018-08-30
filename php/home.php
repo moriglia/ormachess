@@ -23,6 +23,7 @@
     <?php include_once DIR_LAYOUT  . "navigation_menu.php" ;?>
     <header>
         <h1>Home</h1>
+        <i><?php echo $_SESSION['username']; ?></i>
     </header>
     <section id="scoreboardSection">
         <header>
@@ -32,9 +33,21 @@
                 Once they accept the challenge the time flows! Good luck!
             </p>
         </header>
-        <table id="scoreboard"></table>
+        <table id="scoreboard">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Wins</th>
+                    <th>Draws</th>
+                    <th>Fails</th>
+                    <th>Total</th>
+                    <th>In progress</th>
+                    <th colspan="2">Challange as ...</th>
+                </tr>
+            </thead>
+        </table>
     </section>
-    <section id="currentChallengesSection">
+    <section id="matchBoardSection">
         <header>
             <h2>Current Challenges</h2>
             <p>
@@ -59,7 +72,20 @@
                 </dl>
             </p>
         </header>
-        <table id="currentChallenges"></table>
+        <table id="matchBoard">
+            <thead>
+                <tr>
+                    <th>Match ID</th>
+                    <th>White</th>
+                    <th>Black</th>
+                    <th>Proposer</th>
+                    <th>Duration (min)</th>
+                    <th>Proposal/Start time</th>
+                    <th>Status</th>
+                    <th colspan="2">Action</th>
+                </tr>
+            </thead>
+        </table>
     </section>
 
 </body>

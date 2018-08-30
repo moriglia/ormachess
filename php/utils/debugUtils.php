@@ -1,5 +1,5 @@
 <?php
-define("debug", true);
+define("debug", false);
 
 function debugMessage($message){
     if(debug){

@@ -2,7 +2,9 @@ function ScoreboardLoader(id, cid) {
     this.client = new AjaxClient();
     this.BOARD_ID = id;
     this.BOARD_CONTAINER_ID = cid;
+    this.SCOREBOARD_LOADER_URL = "./ajax/scoreboardLoader.php";
     this.scoreboardNode = null;
+
     this.displayScoreboard = function (data) {
         if (data['status']) {
             // error present
@@ -27,11 +29,15 @@ function ScoreboardLoader(id, cid) {
                 "No user to challenge, wait for somebody to sign up in order to challenge them.",
                 "error_display"
             );
+            return;
         }
-        
+
         for(var i = 0; i < data['data'].length; ++i){
             var rowNode = document.createElement('tr');
-            for(var j = 0; j < 6 ; j++){
+            rowNode.setAttribute('id',
+                'user_' + data['data'][i]['username']);
+
+            for(var j = 0; j < 8 ; j++){
                 rowNode.appendChild(document.createElement('td'));
             }
 
@@ -54,18 +60,36 @@ function ScoreboardLoader(id, cid) {
                 document.createTextNode(data['data'][i]['total'])
             );
 
+            var whiteButton = document.createElement('button');
+            whiteButton.appendChild(
+                document.createTextNode("White")
+            );
+            whiteButton.setAttribute('onClick',
+                "matchRequestHandler.submitRequest('"
+                + data['data'][i]['username']
+                + "', matchRequestHandler.WHITE) " );
+
+            var blackButton = document.createElement('button');
+            blackButton.appendChild(
+                document.createTextNode("Black")
+            );
+            blackButton.setAttribute('onClick',
+                "matchRequestHandler.submitRequest('"
+                + data['data'][i]['username']
+                + "', matchRequestHandler.BLACK) " ) ;
+
+            rowNode.childNodes[6].appendChild(whiteButton);
+            rowNode.childNodes[7].appendChild(blackButton);
+
             this.scoreboardNode.appendChild(rowNode);
         }
         return ;
     }
 
     this.loadScoreboard = function () {
-        console.log("ScoreboardLoader.loadScoreboard():");
-        var url = "./ajax/scoreboardLoader.php";
-        this.client.get(url,this.displayScoreboard);
+        this.client.get(this.SCOREBOARD_LOADER_URL,this.displayScoreboard);
         return ;
     }
-    console.log("Loader created for board with id=" + this.BOARD_ID);
 
     return this;
 }
