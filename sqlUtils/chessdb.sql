@@ -21,13 +21,19 @@ create table chessmatch (
     black int(16) not null,
     proposer int(16) not null,
         -- 0: white
+        -- 1: black
     duration int(16) default null,
     startTime datetime default null,
     status tinyint default null,
-        -- 0: in progress,
-        -- 1: white won,
-        -- 2: black won,
-        -- 3: draw
+        -- counting continues from matchrequest
+        -- 3: in progress,
+        -- 4: white won,
+        -- 5: black won,
+        -- 6: draw,
+        -- 7: check to white,
+        -- 8: check to black
+    turn tinyint default 0,
+    chessboard varchar(255) default null,
     primary key (mid),
     constraint user_white
         foreign key (white)

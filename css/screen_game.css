@@ -1,0 +1,35 @@
+#chessboard {
+    width : 480px;
+    height: 480px;
+    border: 2px solid brown;
+}
+#chessboard > div {
+    width: 60px;
+    height: 60px;
+    float: left;
+    background-color: #fff;
+}
+
+/*
+#chessboard > div:nth-child(8n + 1) {
+    display: block;
+}*/
+
+#chessboard div:nth-child(-2n+8),
+#chessboard div:nth-child(8) ~ div:nth-child(-2n+15),
+#chessboard div:nth-child(16) ~ div:nth-child(-2n+24),
+#chessboard div:nth-child(24) ~ div:nth-child(-2n+31),
+#chessboard div:nth-child(32) ~ div:nth-child(-2n+40),
+#chessboard div:nth-child(40) ~ div:nth-child(-2n+47),
+#chessboard div:nth-child(48) ~ div:nth-child(-2n+56),
+#chessboard div:nth-child(56) ~ div:nth-child(-2n+63) {
+    background-color: maroon;
+}
+
+.circle {
+    height: 20px;
+    width: 20px;
+    border: solid;
+    border-width: medium;
+    border-radius: 50%;
+}

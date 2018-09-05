@@ -34,6 +34,12 @@
         }
         unset($_SESSION['uid']);
         unset($_SESSION['username']);
+        unset($_SESSION['mid']);
         return true;
+    }
+
+    function setMatch($matchId){
+        $_SESSION['mid'] = $matchId;
+        return ;
     }
  ?>

@@ -3,7 +3,8 @@ function MatchRequestHandler(id, cid, username) {
     this.username = username;
     this.WHITE = 0;
     this.BLACK = 1;
-    this.HANDLER_URL = "./ajax/matchRequestHandler.php";
+    this.REQUEST_HANDLER_URL = "./ajax/matchRequestHandler.php";
+    this.ACTION_HANDLER_URL = "./ajax/matchActionHandler.php";
     this.LOADER_URL = "./ajax/matchLoader.php";
     this.requestBoard = null ;
     this.MATCHBOARD_ID = id;
@@ -20,6 +21,24 @@ function MatchRequestHandler(id, cid, username) {
             case "2":
             case 2:
                 return "declined";
+            case "3":
+            case 3:
+                return "in progress";
+            case 4:
+            case "4":
+                return "White player won!";
+            case 5:
+            case "5":
+                return "Black player won!";
+            case 6:
+            case "6":
+                return "Draw";
+            case 7:
+            case "7":
+                return "White under check";
+            case 8:
+            case "8":
+                return "Black under check";
             default:
                 return "???";
         }
@@ -30,18 +49,11 @@ function MatchRequestHandler(id, cid, username) {
             "username" : username,
             "color" : color
         } ;
-        this.client.post(this.HANDLER_URL, payload, this.unpackRequestResponse);
+        this.client.post(
+            this.REQUEST_HANDLER_URL, payload, this.unpackRequestResponse);
         return ;
     }
 
-    /*
-    this.deleteUserNode = function (username) {
-        var node = document.getElementById('user_' + username);
-        if(node){
-            node.parentNode.removeChild(node);
-        }
-    }
-    */
 
     this.unpackRequestResponse = function (data){
         if(!data || !data['data']){
@@ -87,9 +99,9 @@ function MatchRequestHandler(id, cid, username) {
         row.childNodes[5].appendChild(
             document.createTextNode(matchRequest['moment'])
         );
-        row.childNodes[6].appendChild(
-            document.createTextNode(this.getStatus(matchRequest['status']))
-        );
+        row.childNodes[6].id = "status_text_" + matchRequest['id'];
+        row.childNodes[6].appendChild(document.createTextNode(
+            this.getStatus(matchRequest['status'])));
 
         // creating buttons -----
         // todo: associate action to buttons
@@ -110,25 +122,43 @@ function MatchRequestHandler(id, cid, username) {
             // declied or waiting for other player to play
             this.requestBoard.appendChild(row);
             return ;
-        } else if (matchRequest['status']==1) {
+        } else if (matchRequest['status']==3
+        || matchRequest['status'] == 7 || matchRequest['status']==8
+        || matchRequest['status'] == 4 || matchRequest['status'] == 5) {
             // accepted
-            var playButton = document.createElement('button');
-            playButton.appendChild(
-                document.createTextNode('Play')
-            )
+            var playButton = document.createElement('input');
+            playButton.setAttribute('type', 'button');
+            playButton.id = 'button_play_' + matchRequest['id'];
+            playButton.value =
+                (matchRequest.status==4 || matchRequest.status == 5)? "See" : "Play";
+            playButton.addEventListener(
+                'click',
+                new Function("matchRequestHandler.play("
+                   + matchRequest['id'] + ");")
+            );
             row.childNodes[7].appendChild(playButton);
-        } else {
+        } else if(matchRequest['status'] == 0) {
             // pending for our response
-            var acceptButton = document.createElement('button');
-            acceptButton.appendChild(
-                document.createTextNode('Accept')
-            )
+            var acceptButton = document.createElement('input');
+            acceptButton.setAttribute('type', 'button');
+            acceptButton.id = 'button_accept_' + matchRequest['id'];
+            acceptButton.value = 'Accept';
+            acceptButton.addEventListener(
+                'click',
+                new Function("matchRequestHandler.accept("
+                    + matchRequest['id'] + ");")
+            );
             row.childNodes[7].appendChild(acceptButton);
 
-            var declineButton = document.createElement('button');
-            declineButton.appendChild(
-                document.createTextNode('Decline')
-            )
+            var declineButton = document.createElement('input');
+            declineButton.setAttribute('type', 'button');
+            declineButton.id = 'button_decline_' + matchRequest['id'];
+            declineButton.value = "Decline";
+            declineButton.addEventListener(
+                'click',
+                new Function("matchRequestHandler.decline("
+                        + matchRequest['id'] + ");")
+            );
             row.childNodes[8].appendChild(declineButton);
         }
 
@@ -147,6 +177,94 @@ function MatchRequestHandler(id, cid, username) {
         //console.log("Loading matches");
         this.client.get(this.LOADER_URL, this.loadResponseHandler);
     }
+
+    this.replaceButtons = function (id, action) {
+        var node1 = document.getElementById('button_accept_' + id);
+        console.log(node1);
+        var father = null;
+        if(node1){
+            father = node1.parentNode;
+            father.removeChild(node1);
+        }
+        var node2 = document.getElementById('button_decline_' + id);
+        if (node2) {
+            node2.parentNode.removeChild(node2);
+        }
+        var status_text = document.getElementById('status_text_' + id);
+        if(action == "accept"){
+            var playButton = document.createElement('input');
+            playButton.setAttribute('type', 'button');
+            playButton.value = "Play";
+            playButton.addEventListener(
+                'click',
+                new Function("matchRequestHandler.play(" + id + ");")
+            );
+            father.appendChild(playButton);
+            status_text.removeChild(status_text.childNodes[0]);
+            status_text.appendChild(document.createTextNode("in progress"));
+        } else if (action == "decline"){
+            status_text.removeChild(status_text.childNodes[0]);
+            status_text.appendChild(document.createTextNode("declined"));
+        }
+        return ;
+    }
+
+    this.accept = function (mid){
+        var payload = {
+            "action" : "accept",
+            "id" : mid
+        };
+        this.client.post(
+            this.ACTION_HANDLER_URL,
+            payload,
+            function(data) {
+                if(data && !data.error){
+                    this.replaceButtons(mid,'accept');
+                }
+                return;
+            }
+        );
+    }
+
+    this.decline = function (mid){
+        var payload = {
+            "action" : "decline",
+            "id" : mid
+        };
+        var thisMRH = this;
+        this.client.post(
+            this.ACTION_HANDLER_URL,
+            payload,
+            function (data){
+                if(!data || data.error){
+                    console.log(data.message?data.message:data);
+                    return ;
+                }
+                thisMRH.replaceButtons(mid, "decline");
+            }
+        );
+        return ;
+    }
+
+    this.play = function (mid) {
+        var payload = {
+            "id" : mid,
+            "action" : "play"
+        };
+        this.client.post(
+            this.ACTION_HANDLER_URL,
+            payload,
+            function(data) {
+                if(!data || data.error){
+                    window.alert(data.message ? data.message :"Invalid action");
+                    return ;
+                }
+                window.open("./game.php", "_blank");
+            }
+        );
+        return ;
+    }
+
 
 
     return this;
