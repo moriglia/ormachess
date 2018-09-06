@@ -31,7 +31,7 @@ function ConnectionManager(gameManager){
 
     // polling management ------------------------------------------------------
     this.pollingTimer = null;
-    this.INTERVAL = 5000;
+    this.INTERVAL = 1000;
 
     this.startPolling = function(){
         if(self.pollingTimer) {

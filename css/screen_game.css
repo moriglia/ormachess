@@ -23,7 +23,7 @@
 #chessboard div:nth-child(40) ~ div:nth-child(-2n+47),
 #chessboard div:nth-child(48) ~ div:nth-child(-2n+56),
 #chessboard div:nth-child(56) ~ div:nth-child(-2n+63) {
-    background-color: maroon;
+    background-color: #d00000;
 }
 
 .circle {
@@ -32,4 +32,12 @@
     border: solid;
     border-width: medium;
     border-radius: 50%;
+}
+
+div.leave {
+    background-color: orange;
+}
+
+div.enter {
+    background-color: green;
 }

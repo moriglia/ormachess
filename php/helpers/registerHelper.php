@@ -42,9 +42,12 @@ $error = (boolean)$result->fetch_assoc()['e'];
 <html>
 <head>
     <?php require DIR_HTML . "head_common.html"; ?>
+    <link rel="stylesheet" href="../../css/registeroutcome_screen.css" media="screen" />
+    <link rel="stylesheet" href="../../css/auth_screen.css" media="screen" />
 </head>
 <body>
 
+    <div class="formcontainer" style="width: 25%;">
 
 <?php
 if(!$error){
@@ -77,5 +80,6 @@ if(!$error){
 <?php
 }
 ?>
+    </div>
 </body>
 </html>

@@ -98,6 +98,33 @@ function ChessboardSketcher(gameManager){
         this.chessboard.childNodes[cellIndex].appendChild(img);
     }
 
+    this.select = function (cellNumber, _class){
+        if(!this.getChessboard()){
+            return false;
+        }
+        var node = this.chessboard.childNodes[cellNumber];
+        var c = null;
+        switch(_class){
+            case "leave":
+            case 0:
+                c = "#6ea0ff";
+                break;
+            case "enter":
+            case 1:
+                c = "#ffb322";
+        }
+        node.style.backgroundColor = c;
+    }
+
+    this.unselect = function (cellNumber) {
+        console.log("Unselecting");
+        if(!this.getChessboard() || cellNumber===null){
+            return false;
+        }
+        var node = this.chessboard.childNodes[cellNumber];
+        node.style.backgroundColor = "";
+    }
+
     this.buildChessboard = function () {
         if(!this.getChessboard()){
             wondow.alert("We could not build the chessboard, sorry.");

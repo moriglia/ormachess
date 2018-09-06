@@ -4,12 +4,10 @@
     debugMessage("Navigation menu works!");
  ?>
 <nav>
-    <ul>
-        <li>
-            <a href="./home.php">Home</a>
-        </li>
-        <li>
-            <a href="./logout.php">Logout</a>
-        </li>
-    </ul>
+    <p>
+        Welcome <i><?php echo $_SESSION['username']; ?></i>
+    </p>
+    <img src="../css/img/icon_smooth.svg" alt="ICON"/>
+    <a href="./home.php">Home</a>
+    <a href="./logout.php">Logout</a>
 </nav>

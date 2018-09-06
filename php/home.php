@@ -18,13 +18,11 @@
     debugMessage("Home now!");
     ?>
     <script src="../js/ajax/homeLoader.js" ></script>
+    <link rel="stylesheet" href="../css/navigation_side.css" />
+    <link rel="stylesheet" href="../css/common_screen.css" />
 </head>
 <body onload="homeInit()">
     <?php include_once DIR_LAYOUT  . "navigation_menu.php" ;?>
-    <header>
-        <h1>Home</h1>
-        <i><?php echo $_SESSION['username']; ?></i>
-    </header>
     <section id="scoreboardSection">
         <header>
             <h2>Challenge a gamer</h2>

@@ -1,0 +1,26 @@
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 5%;
+    background-position: center center;
+}
+
+.formcontainer {
+    text-align: center;
+    background-color: rgba(255,255,255, 0.5);
+    border: solid;
+    width: 20%;
+    height: 80%;
+    padding: 20px;
+    margin: auto;
+}
+
+input {
+    margin-bottom: 20px;
+    font-family: inherit;
+    width: 60%;
+}
+
+* {
+    font-family: monospace;
+}

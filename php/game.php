@@ -24,6 +24,8 @@ if(!isset($_SESSION['mid'])){
     <script type="text/javascript" src="../js/ajax/game/ChessboardManager.js"></script>
     <script type="text/javascript" src="../js/ajax/game/gameLoader.js"></script>
     <link rel="stylesheet" href="../css/screen_game.css" media="screen" />
+    <link rel="stylesheet" href="../css/common_screen.css" />
+    <link rel="stylesheet" href="../css/navigation_top.css" />
 </head>
 <body onload="init();">
     <?php include_once DIR_LAYOUT  . "navigation_menu.php" ;?>

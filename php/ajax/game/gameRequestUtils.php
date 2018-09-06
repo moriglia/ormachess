@@ -45,6 +45,10 @@ function update($chessboard, $status, $turn, &$message){
 }
 
 function move(&$chessboard, $leave, $enter, &$status, &$turn, &$message){
+    if ($status == 4 || $status == 5 || $status == 6){
+        $message = "Ehi, the match is already finished!";
+        return false;
+    }
     if($chessboard->color != $turn){
         $message = "You can't hack the turn :P";
         return false;
@@ -55,7 +59,8 @@ function move(&$chessboard, $leave, $enter, &$status, &$turn, &$message){
     }
 
     if(Piece::getColor($chessboard[$leave]) != $chessboard->color){
-        $message = "Invalid color!";
+        $message = $leave->index . "->" . $chessboard[$leave] . "---";
+        $message .= "Invalid color!";
         return false;
     }
 
@@ -74,13 +79,16 @@ function move(&$chessboard, $leave, $enter, &$status, &$turn, &$message){
         return false;
     } else {
         // commit move:
+        $message = "Everything is fine";
+        //$message = $chessboard[$leave] . "->" . $chessboard[$enter] . "---" . $message;
         $chessboard[$enter] = $chessboard[$leave];
         $chessboard[$leave] = 0;
+        //$message = $chessboard[$leave] . "->" . $chessboard[$enter] . "---" . $message;
     }
 
     if(checkCheck($chessboard, true)){
         if(checkCheckmate($chessboard, true)){
-            $status = 4 + ($chessboard->color == 0);
+            $status = 4 + ($chessboard->color == 1);
             $message = "You won!";
         } else {
             $status = 7 + ($chessboard->color == 0);
@@ -89,7 +97,6 @@ function move(&$chessboard, $leave, $enter, &$status, &$turn, &$message){
         }
     } else{
         $status  = 3; // in progress
-        $message = "Everything is fine";
         $turn = ($chessboard->color + 1) % 2 ;
     }
 

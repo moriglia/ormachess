@@ -68,16 +68,16 @@ function Chessboard(){
             // the ckessboard has not been initialized yet
             // or it's not our turn
             return ;
-        } else if (this.selected == null && this.matrix[cellNumber]==this.EMPTY) {
+        } else if (this.selected === null && this.matrix[cellNumber]==this.EMPTY) {
             // nothing to do, no piece to move
             return ;
-        } else if (this.selected != null) {
+        } else if (this.selected !== null) {
             // check whether the move is valid
-            var chessRequest = new ChessRequest(
-                ChessRequest.SUBMIT,
-                this.selected,
-                cellNumber
-            );
+            var chessRequest = {
+                "cmd" : 0,
+                "leaveCell" : this.selected,
+                "enterCell" : cellNumber
+            };
             this.connectionManager.submitRequest(
                 chessRequest,
                 this.handleMoveResponse
@@ -85,9 +85,11 @@ function Chessboard(){
             this.leave = this.selected;
             this.enter = cellNumber;
             this.selected = null;
+            this.sketcher.select(cellNumber, 'enter');
             return ;
         } else if (this.checkColor(cellNumber)) {
             this.selected = cellNumber;
+            this.sketcher.select(cellNumber, 'leave');
         }
     }
 
@@ -95,8 +97,13 @@ function Chessboard(){
 
     // for move request
     this.handleMoveResponse = function (response) {
+        self.sketcher.unselect(self.leave);
+        self.sketcher.unselect(self.enter);
         if(!response || !response.result){
             // malformed response or invalid move submission
+            if(response){
+                self.sketcher.setMessageServer(response.message);
+            }
             return ;
         }
         //self.update(response.chessboard.cellv);
@@ -110,8 +117,6 @@ function Chessboard(){
             self.decodePiece(piece),
             self.decodeColor(piece)
         );
-        self.leave = null;
-        self.enter = null;
         self.connectionManager.startPolling();
         self.sketcher.setTurn(response.turn);
         self.sketcher.setMessageServer(response.message);
