@@ -25,6 +25,7 @@ nav a {
     height: 35px;
     width: 7em;
     margin-left: 2em;
+    text-align: center;
 }
 
 nav a:hover {

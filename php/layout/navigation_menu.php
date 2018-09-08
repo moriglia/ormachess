@@ -20,4 +20,6 @@
     echo 'class="active"'?>>Match</a>
 <?php } ?>
     <a href="./logout.php">Logout</a>
+    <a href="../html/tos.html">Terms</a>
+    <a href="../html/privacy.html">Privacy</a>
 </nav>

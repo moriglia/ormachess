@@ -17,8 +17,13 @@
      ?>
     <link rel="stylesheet" href="../css/login_screen.css" media="screen" />
     <link rel="stylesheet" href="../css/auth_screen.css" media="screen" />
+    <link rel="stylesheet" href="../css/navigation_top.css" media="screen" />
 </head>
 <body>
+    <nav>
+        <a href="../html/tos.html">Terms</a>
+        <a href="../html/privacy.html">Privacy</a>
+    </nav>
     <div id="loginContainer" class="formcontainer">
         <header>
             <h1>Login</h1>

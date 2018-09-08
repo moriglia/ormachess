@@ -1,0 +1,42 @@
+body > header, section {
+    width: 50%;
+    margin: auto;
+}
+
+body {
+    background-image: url("../css/img/wood_wapplaper.jpg");
+    background-color: black;
+    color: white;
+    font-family: monospace;
+
+    padding-top: 100px;
+}
+
+body * {
+    background-color: black;
+}
+
+body > header {
+    position: static;
+    top: 2em;
+    border: solid black;
+    padding: 1em;
+}
+
+body > header, body > header > * {
+    background-color: maroon;
+}
+
+section {
+    border: solid;
+    border-color: maroon;
+
+    margin-top: 1em;
+}
+
+img {
+    width: 80%;
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+}
