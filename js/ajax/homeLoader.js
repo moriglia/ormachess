@@ -5,15 +5,8 @@ var matchRequestHandler = null;
 function homeInit(){
     scoreboardLoader = ScoreboardLoader("scoreboard", "scoreboardSection");
     scoreboardLoader.loadScoreboard();
-    
-    sessionDataRetriever = SessionDataRetriever();
-    matchRequestHandler = MatchRequestHandler(
-        "matchBoard",
-        "matchBoardSection",
-        sessionDataRetriever.getUsername()
-    );
 
-    matchRequestHandler.loadMatches();
+    matchRequestHandler = MatchRequestHandler();
 
     console.log("Initialization completed.");
 }

@@ -91,8 +91,8 @@ function ChessboardSketcher(gameManager){
         var img = document.createElement('img');
         img.setAttribute('src', path);
         img.setAttribute('alt', "" + piece + color);
-        img.setAttribute('width', '60px');
-        img.setAttribute('height', '60px');
+        img.setAttribute('width', '60');
+        img.setAttribute('height', '60');
 
         this.clearCell(cellIndex);
         this.chessboard.childNodes[cellIndex].appendChild(img);

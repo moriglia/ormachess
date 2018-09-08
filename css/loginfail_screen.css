@@ -1,0 +1,18 @@
+body {
+    background-image: url("../css/img/chessboard.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+body > div {
+    background-image: url("../css/img/wood_wapplaper.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: solid;
+    border-color: maroon;
+    width: 30%;
+    margin: auto;
+    margin-top: 7em;
+    color: white;
+}

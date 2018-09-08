@@ -37,13 +37,14 @@ function ScoreboardLoader(id, cid) {
             rowNode.setAttribute('id',
                 'user_' + data['data'][i]['username']);
 
-            for(var j = 0; j < 8 ; j++){
+            for(var j = 0; j < 3 ; j++){
                 rowNode.appendChild(document.createElement('td'));
             }
 
             rowNode.childNodes[0].appendChild(
                 document.createTextNode(data['data'][i]['username'])
             );
+            /*
             rowNode.childNodes[1].appendChild(
                 document.createTextNode(data['data'][i]['wins'])
             );
@@ -58,7 +59,7 @@ function ScoreboardLoader(id, cid) {
             );
             rowNode.childNodes[5].appendChild(
                 document.createTextNode(data['data'][i]['total'])
-            );
+            );*/
 
             var whiteButton = document.createElement('button');
             whiteButton.appendChild(
@@ -78,8 +79,8 @@ function ScoreboardLoader(id, cid) {
                 + data['data'][i]['username']
                 + "', matchRequestHandler.BLACK) " ) ;
 
-            rowNode.childNodes[6].appendChild(whiteButton);
-            rowNode.childNodes[7].appendChild(blackButton);
+            rowNode.childNodes[1].appendChild(whiteButton);
+            rowNode.childNodes[2].appendChild(blackButton);
 
             this.scoreboardNode.appendChild(rowNode);
         }

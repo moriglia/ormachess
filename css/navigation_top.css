@@ -35,6 +35,10 @@ nav a:link, nav a:visited {
     text-decoration: none;
 }
 
+nav a.active{
+    background-color: maroon;
+}
+
 nav img {
     padding-top: 10px;
     height: 30px;

@@ -41,3 +41,40 @@ div.leave {
 div.enter {
     background-color: green;
 }
+
+#chessboard {
+    display: inline-block;
+    float: left;
+}
+
+table {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border: solid maroon;
+}
+
+td > input {
+    width: 25em;
+    font-size: inherit;
+}
+td {
+    text-align: right;
+}
+
+td + td {
+    text-align: justify;
+    width: 25em;
+}
+
+body > div {
+    width: 90%;
+    margin: auto;
+
+    padding-top: 80px;
+}
+
+body {
+    background-image: url("../css/img/wood_wapplaper.jpg");
+}

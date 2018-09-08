@@ -4,16 +4,16 @@
     require_once DIR_UTILS . "sessionUtils.php";
  ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <?php
     require DIR_HTML . "head_common.html";
  ?>
  <link rel="stylesheet" href="../css/signup_screen.css" media="screen" />
  <link rel="stylesheet" href="../css/auth_screen.css" media="screen" />
-    <script type="text/javascript" src="../js/password_confirm.js"></script>
+    <script src="../js/password_confirm.js"></script>
 </head>
-<body onload="javascript:init();">
+<body onload="javascript:init();" lang="en">
     <div class="formcontainer">
         <header>
             <h1>Sign Up</h1>

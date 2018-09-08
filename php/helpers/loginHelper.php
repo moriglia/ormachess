@@ -36,11 +36,14 @@ if($auth){
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <?php includeHead(); ?>
+    <link rel="stylesheet" media="screen" href="../../css/common_screen.css" />
+    <link rel="stylesheet" media="screen" href="../../css/loginfail_screen.css" />
 </head>
 <body>
+    <div>
     <?php
     if ($uid!=null){
     ?>
@@ -48,7 +51,7 @@ if($auth){
         <h1>Wrong password!</h1>
     </header>
     <p>
-        Go back to the<a href="../login.php">login page</a>.
+        Go back to the <a href="../login.php">login page</a>.
     </p>
 <?php } else { ?>
     <header>
@@ -58,5 +61,6 @@ if($auth){
         <a href="../register.php">Sign Up</a> now.
     </p>
 <?php } ?>
+    </div>
 </body>
 </html>

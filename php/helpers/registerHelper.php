@@ -39,7 +39,7 @@ $result = callProcedure($statement);
 $error = (boolean)$result->fetch_assoc()['e'];
  ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <?php require DIR_HTML . "head_common.html"; ?>
     <link rel="stylesheet" href="../../css/registeroutcome_screen.css" media="screen" />

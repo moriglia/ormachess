@@ -1,3 +1,10 @@
+function clearNode(node){
+    for(var i = node.childNodes.length; i>0; --i){
+        node.removeChild(node.childNodes[i-1]);
+    }
+    return node;
+}
+
 function MatchRequestHandler(id, cid, username) {
     this.client = new AjaxClient();
     this.username = username;
@@ -60,8 +67,22 @@ function MatchRequestHandler(id, cid, username) {
             window.alert("Something went wrong with the response");
             return;
         }
-        this.displayRequest(data['data']);
+        //this.displayRequest(data['data']);
+        this.displayServerResponse(data);
         return ;
+    }
+
+    this.displayServerResponse = function(data){
+        var messageNode = document.getElementById("message_displayer");
+        messageNode = clearNode(messageNode);
+        if(data.message == "OK"){
+            var txt = "You can see the new requst on the Challenges page";
+            messageNode.appendChild(document.createTextNode(txt));
+            messageNode.setAttribute('class', "okmessage");
+        } else {
+            messageNode.appendChild(document.createTextNode(data.message));
+            messageNode.setAttribute('class', "errormessage");
+        }
     }
 
     this.displayRequest = function (matchRequest){
@@ -76,7 +97,7 @@ function MatchRequestHandler(id, cid, username) {
         }
 
         var row = document.createElement('tr');
-        for(var i = 0; i < 9; ++i){
+        for(var i = 0; i < 7; ++i){
             row.appendChild(document.createElement('td'));
         }
         row.childNodes[0].appendChild(
@@ -93,14 +114,15 @@ function MatchRequestHandler(id, cid, username) {
                 matchRequest['proposer']=="0" ? "white" : "black"
             )
         );
+        /*
         row.childNodes[4].appendChild(
             document.createTextNode(matchRequest['duration'])
         );
         row.childNodes[5].appendChild(
             document.createTextNode(matchRequest['moment'])
-        );
-        row.childNodes[6].id = "status_text_" + matchRequest['id'];
-        row.childNodes[6].appendChild(document.createTextNode(
+        );*/
+        row.childNodes[4].id = "status_text_" + matchRequest['id'];
+        row.childNodes[4].appendChild(document.createTextNode(
             this.getStatus(matchRequest['status'])));
 
         // creating buttons -----
@@ -136,7 +158,7 @@ function MatchRequestHandler(id, cid, username) {
                 new Function("matchRequestHandler.play("
                    + matchRequest['id'] + ");")
             );
-            row.childNodes[7].appendChild(playButton);
+            row.childNodes[5].appendChild(playButton);
         } else if(matchRequest['status'] == 0) {
             // pending for our response
             var acceptButton = document.createElement('input');
@@ -148,7 +170,7 @@ function MatchRequestHandler(id, cid, username) {
                 new Function("matchRequestHandler.accept("
                     + matchRequest['id'] + ");")
             );
-            row.childNodes[7].appendChild(acceptButton);
+            row.childNodes[5].appendChild(acceptButton);
 
             var declineButton = document.createElement('input');
             declineButton.setAttribute('type', 'button');
@@ -159,7 +181,7 @@ function MatchRequestHandler(id, cid, username) {
                 new Function("matchRequestHandler.decline("
                         + matchRequest['id'] + ");")
             );
-            row.childNodes[8].appendChild(declineButton);
+            row.childNodes[6].appendChild(declineButton);
         }
 
         this.requestBoard.appendChild(row);

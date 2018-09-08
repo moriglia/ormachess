@@ -2,7 +2,7 @@
     require_once __DIR__ . "/config.php";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <?php require DIR_HTML . "head_common.html"; ?>
 </head>

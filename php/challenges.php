@@ -8,7 +8,7 @@
     if(!isUserLoggedIn()){
         header("Location: ./login.php");
     }
-    $_SESSION['page'] = 'home';
+    $_SESSION['page'] = 'challenges';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,38 +18,36 @@
     includeAjax();
     debugMessage("Home now!");
     ?>
-    <script src="../js/ajax/homeLoader.js" ></script>
+    <script src="../js/ajax/challengesLoader.js" ></script>
     <link rel="stylesheet" href="../css/navigation_side.css" />
     <link rel="stylesheet" href="../css/common_screen.css" />
     <link rel="stylesheet" href="../css/home_screen.css" />
 </head>
-<body onload="homeInit()">
+<body onload="challengesInit()">
     <?php include_once DIR_LAYOUT  . "navigation_menu.php" ;?>
-    <section id="scoreboardSection">
+    <section id="matchBoardSection">
         <header>
-            <h2>Challenge a gamer</h2>
+            <h2>Current Challenges</h2>
             <p>
-                Choose a gamer to challenge. Click on one of the color button to choose your colour.
-                Your enemy will be able to accept or decline your request. You can check whether they
-                have accepted your request on the <i>Challenges</i> page, reachable throug the navigator
-                on the left.
-            </p>
-            <p id="message_displayer">
-
+                You can see all current challenges related to you.
+                You can accept or decline the challenges proposed by
+                other players, play matches that are in progress or see the
+                finished ones.
             </p>
         </header>
-        <table id="scoreboard">
+        <table id="matchBoard">
             <thead>
                 <tr>
-                    <th>Username</th>
+                    <th>Match ID</th>
+                    <th>White</th>
+                    <th>Black</th>
+                    <th>Proposer</th>
                 <!--
-                    <th>Wins</th>
-                    <th>Draws</th>
-                    <th>Fails</th>
-                    <th>Total</th>
-                    <th>In progress</th>
+                    <th>Duration (min)</th>
+                    <th>Proposal/Start time</th>
                 -->
-                    <th colspan="2">Challange as ...</th>
+                    <th>Status</th>
+                    <th colspan="2">Action</th>
                 </tr>
             </thead>
         </table>

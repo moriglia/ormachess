@@ -35,6 +35,10 @@ nav a:visited, nav a:link {
     color: white;
 }
 
+nav a.active {
+    background-color: maroon;
+}
+
 nav a:hover {
     background-color: grey;
 }
