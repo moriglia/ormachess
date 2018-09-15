@@ -23,6 +23,7 @@
     <nav>
         <a href="../html/tos.html">Terms</a>
         <a href="../html/privacy.html">Privacy</a>
+        <a href="../html/help.html">Help</a>
     </nav>
     <div id="loginContainer" class="formcontainer">
         <header>

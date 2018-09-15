@@ -126,7 +126,6 @@ function MatchRequestHandler(id, cid, username) {
             this.getStatus(matchRequest['status'])));
 
         // creating buttons -----
-        // todo: associate action to buttons
         if(!this.username) {
             this.username = sessionDataRetriever.getUsername();
         }
@@ -141,7 +140,8 @@ function MatchRequestHandler(id, cid, username) {
                 )
             || !this.username
             ){
-            // declied or waiting for other player to play
+            // declined or waiting for other player to accept
+            console.log("No button needed.");
             this.requestBoard.appendChild(row);
             return ;
         } else if (matchRequest['status']==3
@@ -281,7 +281,7 @@ function MatchRequestHandler(id, cid, username) {
                     window.alert(data.message ? data.message :"Invalid action");
                     return ;
                 }
-                window.open("./game.php", "_blank");
+                window.location.href="./game.php";
             }
         );
         return ;

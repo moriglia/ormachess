@@ -17,14 +17,15 @@ define("BLACK", 1);
 class Piece {
     public $type, $color;
 
-    function __construct(...$argv){
+    function __construct(){
         /*
         Possibilities:
             new Piece();
             new Piece($encodedPiece);
             new Piece($color, $pieceType);
         */
-        $argc = count($argv);
+        $argv = func_get_args();
+        $argc = func_num_args();
         if($argc == 0){
             $this->type = null;
             $this->color = null;
@@ -53,8 +54,9 @@ class Cell {
         $col,
         $index;
 
-    function __construct(...$argv) {
-        $argc = count($argv);
+    function __construct() {
+        $argv = func_get_args();
+        $argc = func_num_args();
         if($argc == 0){
             $this->row = null;
             $this->col = null;

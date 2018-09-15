@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>OrMa Chess - Help</title>
+	<meta name="author" content="Origlia Marco, 552802">
+	<link rel="icon" href="../css/img/icon32x32.png" sizes="32x32" type="image/png">
+	<link rel="stylesheet" href="../css/navigation_top.css" >
+	<link rel="stylesheet" href="../css/static_screen.css" />
+</head>
+<body>
+	<nav>
+		<a href="../php/home.php">Home</a>
+		<a href="./tos.html">ToS</a>
+		<a href="./privacy.html">Privacy</a>
+		<a href="./help.html" class="active">Help</a>
+	</nav>
+	<header>
+        <h1>Guide to the usage of the service</h1>
+    </header>
+    <section>
+    	<header>
+    		<h2>Registration</h2>
+    	</header>
+    	Create a new account throug the <a href="../php/register.php">registration page</a>. Fill the form and submit. You will be redirected to a page that tells you whether the registration process was successful or not. Follow the provided link to login.
+    </section>
+    <section>
+    	<header>
+    		<h2>Login</h2>
+    	</header>
+    	Log in throug the <a href="../php/login.php">login page</a>. <strong>Notice:</strong> <i>if you are currently logged in, you will be redirected to the home page.</i> Fill the form and submit. You will be redirected to the home page. If you mistype the username or your password, you will be noticed that the login was not successful (follow the link to create a new account or to go back to the login page).
+    </section>
+    <section>
+    	<header>
+    		<h2>Home</h2>
+    	</header>
+    	In your <a href="../php/home.php">home</a> you can see all users that are registered in the platform. If you want to play a game with one of them choose a color to play with and click on the corresponding button (e.g. you want to play against bob and you want to use white pieces, then click on the "White" button near "bob"). You can see the new pending request in the <a href="../php/challenges.php">challenges</a> page.
+    </section>
+    <section>
+    	<header>
+    		<h2>Challenges</h2>
+    	</header>
+    	In your <a href="../php/home.php">challenges</a> page are listed all match requests and matches that are related to you. You can see the status that tells you whether the request is pending, declined, accepted or the match is in progress or finished. In case the match has been declined (either by you or by the other player), or the request is still pending and you are the proposer, at the end of the row no button will appear. The buttons that appear at the end of the rows allow you to accept/decline a match request, play a match that has been accepted, see the final status of a finished game.
+    </section>
+    <section>
+    	<header>
+    		<h2>Match</h2>
+    	</header>
+    	In the <a href="../php/game.php">game</a> page you can play chess against your enemy. Your color is displayed aside the chessboard, where you can also see whose turn is the current and the messages that help you understand what's happening. When it's your turn and you want to move a piece, first click on the piece (the cell should change color), then click on the cell you want to move to (there might be an enemy piece already). If the move is valid the piece will appear in the new position and the turn is given to your opponent. Wait for him to move: you will be given back control un the chessboard when you see that the turn color changes back to your color.
+    	<strong>Notice:</strong> <i>the match tab in the navigator will appear only if you are playing a game during the current session. You can switch match by clicking on the "Play" button related to another match</i>
+    </section>
+    <section>
+    	<header>
+    		<h2>ToS and Privacy</h2>
+    	</header>
+    	You can consult the Terms of Service and the Privacy Policy through the related links available in the navigator.
+    </section>
+    <section>
+    	<header>
+    		<h2>Feedback and suggestions</h2>
+    	</header>
+    	Give me your feedback and suggestions: <a href="mailto:m.origlia@studenti.unipi.it">m.origlia@studenti.unipi.it</a>
+    </section>
+    <section>
+        <header>
+            <h2>501 Not implemented</h2>
+        </header>
+        <ul>
+            <li>Pawn promotion</li>
+            <li>Draw and stalemate</li>
+            <li>Castle</li>
+            <li>En passant pawn capture</li>
+        </ul>
+    </section>
+</body>
+</html>
